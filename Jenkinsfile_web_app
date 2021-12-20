@@ -29,7 +29,7 @@ pipeline{
                 stage('Test On Firefox') {
                     steps {
                         script{
-                            test("STAGE", "chrome")
+                            test("STAGE", "firefox")
                         }
                     }
                 }
@@ -67,7 +67,7 @@ pipeline{
                 stage('Test On Firefox') {
                     steps {
                         script{
-                            test("PROD", "chrome")
+                            test("PROD", "firefox")
                         }
                     }
                 }
