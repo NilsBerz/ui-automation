@@ -25,6 +25,7 @@ pipeline{
             post{
                 always{
                     sh "ls -la"
+                    sh "ls -l allure_test_results"
                     sh "docker-compose down"
                 }
                 success{
@@ -79,7 +80,7 @@ def test(String environment){
         jdk: '',
         properties: [],
         reportBuildPolicy: 'ALWAYS',
-        results: [[path: './allure_test_results/allure-maven-plugin']]
+        results: [[path: './allure_test_results']]
     ])
     // publishHTML([
             // allowMissing: false, 
