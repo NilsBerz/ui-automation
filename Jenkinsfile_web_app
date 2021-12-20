@@ -6,6 +6,7 @@ pipeline{
     stages{
         stage("Build"){
             steps{
+                sh "docker-compose down"
                 echo "Building web app"
             }
         }
@@ -111,5 +112,3 @@ def test(String environment, String browser){
             // reportName: "Test Report ${environment}", 
             // reportTitles: ''])
 }
-
-Jenkinsfile_web_app
