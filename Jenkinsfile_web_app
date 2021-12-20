@@ -17,9 +17,20 @@ pipeline{
             }
         }
         stage("Test staging"){
-            steps{
-                script{
-                    test("STAGE")
+            parallel {
+                stage('Test On Chrome') {
+                    steps {
+                        script{
+                            test("STAGE", "chrome")
+                        }
+                    }
+                }
+                stage('Test On Firefox') {
+                    steps {
+                        script{
+                            test("STAGE", "chrome")
+                        }
+                    }
                 }
             }
             post{
@@ -44,9 +55,20 @@ pipeline{
             }
         }
         stage("Test prod"){
-            steps{
-                script{
-                    test("PROD")
+            parallel {
+                stage('Test On Chrome') {
+                    steps {
+                        script{
+                            test("PROD", "chrome")
+                        }
+                    }
+                }
+                stage('Test On Firefox') {
+                    steps {
+                        script{
+                            test("PROD", "chrome")
+                        }
+                    }
                 }
             }
             post{
@@ -70,15 +92,15 @@ def deploy(String environment){
     echo "Deploying to ${environment}"
 }
 
-def test(String environment){
+def test(String environment, String browser){
     echo "Testing on ${environment}"
-    sh "docker-compose up -d"
+    sh "docker-compose up mvn-tests-${browser}"
     allure([
         includeProperties: false,
         jdk: '',
         properties: [],
         reportBuildPolicy: 'ALWAYS',
-        results: [[path: './allure_test_results/allure-results/chrome'], [path: './allure_test_results/allure-results/firefox']]
+        results: [[path: './allure_test_results/allure-results/${browser}']]
     ])
     // publishHTML([
             // allowMissing: false, 
@@ -89,3 +111,5 @@ def test(String environment){
             // reportName: "Test Report ${environment}", 
             // reportTitles: ''])
 }
+
+Jenkinsfile_web_app
