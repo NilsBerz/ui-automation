@@ -37,7 +37,7 @@ services:
       - chrome
     networks: 
       - test-automation-setup
-    command: bash -c "mvn clean test -Dbrowser=chrome -DgridURL=selenium-hub:4444 && mvn io.qameta.allure:allure-maven:report && rm -rf allure_test_results/* && cp -r target/site/allure-maven-plugin allure_test_results"
+    command: bash -c "mvn clean test -Dbrowser=chrome -DgridURL=selenium-hub:4444 && mvn io.qameta.allure:allure-maven:report && cp -r target/site/allure-maven-plugin allure_test_results"
     volumes:
       - $PWD/allure_test_results:/docker/allure_test_results/
 
@@ -48,7 +48,7 @@ services:
       - firefox
     networks: 
       - test-automation-setup
-    command: bash -c "mvn clean test -Dbrowser=firefox -DgridURL=selenium-hub:4444 && mvn io.qameta.allure:allure-maven:report && rm -rf allure_test_results/* && cp -r target/site/allure-maven-plugin allure_test_results"
+    command: bash -c "mvn clean test -Dbrowser=firefox -DgridURL=selenium-hub:4444 && mvn io.qameta.allure:allure-maven:report && cp -r target/site/allure-maven-plugin allure_test_results"
     volumes:
       - $PWD/allure_test_results:/docker/allure_test_results/
     
