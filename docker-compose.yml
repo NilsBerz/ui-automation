@@ -11,8 +11,6 @@ services:
   chrome:
     container_name: chrome-node
     image: selenium/node-chrome:latest
-    depends_on:
-      - selenium-hub
     environment:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
@@ -22,8 +20,6 @@ services:
   firefox:
     container_name: firefox-node
     image: selenium/node-firefox:latest
-    depends_on:
-      - selenium-hub
     environment:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
