@@ -22,18 +22,18 @@ pipeline{
                     test("STAGE")
                 }
             }
-        }
-        post{
-            always{
-                sh "docker-compose down"
-            }
-            success{
-                echo "Success in stage ${env.STAGE_NAME}"
-                sh "bash send_notification.sh '${env.STAGE_NAME}' 0"
-            }
-            failure{
-                echo "Failure in stage ${env.STAGE_NAME}"
-                sh "bash send_notification.sh '${env.STAGE_NAME}' 1"
+            post{
+                always{
+                    sh "docker-compose down"
+                }
+                success{
+                    echo "Success in stage ${env.STAGE_NAME}"
+                    sh "bash send_notification.sh '${env.STAGE_NAME}' 0"
+                }
+                failure{
+                    echo "Failure in stage ${env.STAGE_NAME}"
+                    sh "bash send_notification.sh '${env.STAGE_NAME}' 1"
+                }
             }
         }
         stage("Deploy prod"){
