@@ -78,7 +78,7 @@ def test(String environment){
         jdk: '',
         properties: [],
         reportBuildPolicy: 'ALWAYS',
-        results: [[path: allure_test_results/allure-maven-plugin]]
+        results: [[path: 'allure_test_results/allure-maven-plugin']]
     ])
     // publishHTML([
             // allowMissing: false, 
