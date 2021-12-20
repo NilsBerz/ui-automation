@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("Build"){
             steps{
-                sh "docker system prune -f && docker-compose down"
+                sh "docker system prune -f && docker-compose down && docker network create test-automation-setup"
                 echo "Building web app"
             }
         }
