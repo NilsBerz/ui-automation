@@ -73,12 +73,19 @@ def deploy(String environment){
 def test(String environment){
     echo "Testing on ${environment}"
     sh "docker-compose up -d"
-    publishHTML([
-            allowMissing: false, 
-            alwaysLinkToLastBuild: false,
-            keepAll: false, 
-            reportDir: 'allure_test_results/allure-maven-plugin', 
-            reportFiles: "index.html", 
-            reportName: "Test Report ${environment}", 
-            reportTitles: ''])
+    allure([
+        includeProperties: false,
+        jdk: '',
+        properties: [],
+        reportBuildPolicy: 'ALWAYS',
+        results: [[path: allure_test_results]]
+    ])
+    // publishHTML([
+            // allowMissing: false, 
+            // alwaysLinkToLastBuild: false,
+            // keepAll: false, 
+            // reportDir: 'allure_test_results/allure-maven-plugin', 
+            // reportFiles: "index.html", 
+            // reportName: "Test Report ${environment}", 
+            // reportTitles: ''])
 }
