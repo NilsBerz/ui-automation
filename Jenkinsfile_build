@@ -1,0 +1,18 @@
+pipeline{
+    agent any
+    triggers {
+        pollSCM('*/1 * * * *')
+    }
+    stages{
+        stage("Build Maven and JDK"){
+            steps{
+                sh "docker build -t ubuntu-jdk-mvn . -f Dockerfile_maven_jdk"
+            }
+        }
+        stage("Build Maven tests"){
+            steps{
+                sh "docker build -t nberzins/mvn_tests:latest . -f Dockerfile && docker push nberzins/mvn_tests:latest"
+            }
+        }
+    }
+}

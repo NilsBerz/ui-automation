@@ -1,0 +1,66 @@
+pipeline{
+    agent any
+    triggers {
+        pollSCM('*/1 * * * *')
+    }
+    stages{
+        stage("Build"){
+            steps{
+                echo "Building web app"
+            }
+        }
+        stage("Deploy staging"){
+            steps{
+                script{
+                    deploy("STAGE")
+                }
+            }
+        }
+        stage("Test staging"){
+            steps{
+                script{
+                    test("STAGE")
+                }
+            }
+        }
+        stage("Deploy prod"){
+            steps{
+                script{
+                    deploy("PROD")
+                }
+            }
+        }
+        stage("Test prod"){
+            steps{
+                script{
+                    test("PROD")
+                }
+            }
+        }
+    }
+    post{
+        success{
+            sh "send_notification.sh ${env.STAGE_NAME} 0" 
+        }
+        failure{
+            sh "send_notification.sh ${env.STAGE_NAME} 1"
+        }
+    }
+}
+
+def deploy(String environment){
+    echo "Deploying to ${environment}"
+}
+
+def test(String environment){
+    echo "Testing on ${environment}"
+    sh "docker-compose up"
+    publishHTML([
+            allowMissing: false, 
+            alwaysLinkToLastBuild: false,
+            keepAll: false, 
+            reportDir: 'allure_test_results/allure-maven-plugin', 
+            reportFiles: "index.html", 
+            reportName: "Test Report ${environment}", 
+            reportTitles: ''])
+}

@@ -1,0 +1,1 @@
+Link to maven tests docker image (nberzins/mvn_tests:latest): https://hub.docker.com/r/nberzins/mvn_tests/tags
